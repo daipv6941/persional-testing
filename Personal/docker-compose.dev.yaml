@@ -1,0 +1,27 @@
+version: '3'
+services:
+  personal:
+    container_name: persional
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5000:80"
+    logging: 
+            driver: "json-file"
+            options: 
+                max-size: "50m"
+    environment:
+      BUILD_ENV: prod
+      APPLICATION: 'app' 
+
+    networks:
+      - app-network
+      
+      
+networks:
+  app-network:
+    external: true
+    

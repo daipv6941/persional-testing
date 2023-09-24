@@ -7,13 +7,18 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS=http://+:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Personal/Personal.csproj", "Personal/"]
-RUN dotnet restore "Personal/Personal.csproj"
+COPY ["Personal.csproj", "."]
+RUN dotnet restore "Personal.csproj"
 COPY . .
-WORKDIR "/src/Personal"
+COPY appsettings.${BUILD_ENV:-dev}.json ./appsettings.json
+
+WORKDIR "/src"
 RUN dotnet build "Personal.csproj" -c Release -o /app/build
 
 FROM build AS publish
