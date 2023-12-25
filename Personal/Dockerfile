@@ -13,10 +13,10 @@ ENV ASPNETCORE_URLS=http://+:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Personal.csproj", "."]
+COPY ["Personal/Personal.csproj", "."]
 RUN dotnet restore "Personal.csproj"
 COPY . .
-COPY appsettings.${BUILD_ENV:-dev}.json ./appsettings.json
+COPY Personal/appsettings.${BUILD_ENV:-dev}.json ./appsettings.json
 
 WORKDIR "/src"
 RUN dotnet build "Personal.csproj" -c Release -o /app/build
