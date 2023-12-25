@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Docker Build & Push') {
             steps {
-                sh 'bash dockerPush.sh'
+                sh './dockerPush.sh'
             }
         }
     }
